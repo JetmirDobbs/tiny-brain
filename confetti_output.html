@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Spinner</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+    #spinner {
+        width: 200px;
+        height: 200px;
+        border: 2px solid #ccc;
+        border-radius: 50%;
+        position: relative;
+        margin: 50px auto;
+    }
+    #spinner::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        border-radius: 50%;
+        z-index: 1;
+    }
+    #spinButton {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+    }
+</style>
+</head>
+<body>
+
+<div id="spinner"></div>
+<button id="spinButton">Spin</button>
+<div id="output"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+<script>
+    const spinner = document.getElementById('spinner');
+    const spinButton = document.getElementById('spinButton');
+    const output = document.getElementById('output');
+
+    spinButton.addEventListener('click', spin);
+
+    function spin() {
+        const sectors = ['Option 1', 'Option 2', 'Option 3', 'Option 4', 'Option 5', 'Option 6'];
+        const angle = Math.floor(Math.random() * 360);
+        const sectorSize = 360 / sectors.length;
+        const sectorIndex = Math.floor((angle % 360) / sectorSize);
+        const selectedOption = sectors[sectorIndex];
+        output.innerHTML = `You spun: ${selectedOption}`;
+
+        // Confetti animation
+        const duration = 3 * 1000;
+        const animationEnd = Date.now() + duration;
+        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+        function randomAnimation() {
+            confetti({
+                particleCount: randomInRange(50, 100),
+                angle: randomInRange(55, 125),
+                spread: randomInRange(50, 70),
+                origin: { x: 0 },
+                colors: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
+                ...defaults
+            });
+            confetti({
+                particleCount: randomInRange(50, 100),
+                angle: randomInRange(235, 305),
+                spread: randomInRange(50, 70),
+                origin: { x: 1 },
+                colors: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
+                ...defaults
+            });
+        }
+
+        function loop() {
+            const now = Date.now();
+            const timeLeft = Math.max(0, animationEnd - now);
+            if (timeLeft === 0) {
+                return;
+            }
+            randomAnimation();
+            requestAnimationFrame(loop);
+        }
+
+        loop();
+    }
+</script>
+
+</body>
+</html>
