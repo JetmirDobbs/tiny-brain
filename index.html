@@ -7,15 +7,21 @@
   <div>
     Would you like some coffee?
   </div>
-  <button>
+  <button id="spinner-button">
     spin
   </button>
   <div>
-    <img src="https://assets-global.website-files.com/625e75c5d17b9b72b120b788/64293fb766cfe62271830f23_pngwing.com.webp" alt="spinner image" width="133" height="100">
+    <img src="https://assets-global.website-files.com/625e75c5d17b9b72b120b788/64293fb766cfe62271830f23_pngwing.com.webp" alt="spinner image" width="133" height="100" id="spinner">
   </div>
 </body>
 </html>
-
+<script>
+  const spinner=document.getElementById("spinner")
+  const spinnerButton=document.getElementById("spinner-button");
+  spinnerButton.addEventListener("click", (event) => {
+    spinner.style.transform = 'rotate(360deg)'
+  });
+</script>
 <!--
   1. get image for spinner-
   2. place image on webstie-
