@@ -15,25 +15,36 @@
   </div>
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
 <script>
-  const spinner=document.getElementById("spinner")
+  const spinner=document.getElementById("spinner");
   const spinnerButton=document.getElementById("spinner-button");
-  spinnerButton.addEventListener("click", (event) => {
-    spinner.style.transform = 'rotate(360deg)'
+  let rotation = 0;
+
+  spinnerButton.addEventListener("click", () => {
+    rotation += Math.random() * 360 * 5 + 360 * 5;
+    spinner.style.transform = `rotate(${rotation}deg)`;
+    spinner.style.transition = 'transform 3s ease-out';
+    setTimeout(() => {
+      confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+    }, 3000);
   });
 </script>
 <!--
   1. get image for spinner-
   2. place image on webstie-
   3. format image to correct size-
-  4. make a button that effects the image
-  4a. make the image spin
-  4b. make the buttone make the image spin
-  4c. make the image spin for a duration of time
+  4. make a button that effects the image-
+  4a. make the image spin-
+  4b. make the buttone make the image spin-
+  4c. make the image spin for a duration of time-
   5. make a randomizer that will choose and answer from the spinner
   6. make an output box for the spinner
   6a. make the spinner have answers on it
-  7. make confetti appear
-  
+  7. make confetti appear-
   
   -->
